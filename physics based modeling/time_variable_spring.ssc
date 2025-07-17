@@ -1,0 +1,25 @@
+component time_variable_spring < foundation.mechanical.translational.branch
+% Translational Spring
+% The block represents an ideal mechanical linear spring with 
+% time-dependent stiffness
+%
+% Connections R and C are mechanical translational conserving ports. 
+% The block positive direction is from port R to port C. This means that
+% the force is positive if it acts in the direction from R to C.
+
+% Copyright 2005-2016 The MathWorks, Inc.
+inputs
+    k = {1, 'N/m'};
+end
+
+variables
+    x = { value = { 0, 'm'}, priority = priority.high };    % Deformation
+end
+
+equations
+    assert(k>0)
+    v == x.der;
+    f == k * x;
+end
+
+end

@@ -1,0 +1,34 @@
+component v_a_viewer
+% 
+% The physical signal ports V and P report the velocity and position,
+% respectively, of port R relative to port C. The measured velocity is
+% positive when the velocity at port R is greater than the velocity at port
+% C.
+
+nodes
+    R = foundation.mechanical.translational.translational; % R:left
+    C = foundation.mechanical.translational.translational; % C:right
+end
+
+outputs
+    p = { 0, 'm' };   % p:right
+    v = { 0, 'm/s' }; % v:right
+    a = { 0, 'm/s^2'}; % a:right
+end
+
+parameters
+    offset = { 0, 'm' }; % Initial position
+end
+
+variables (Access = private)
+    x = {value = offset, priority = priority.high}; % Position
+end
+
+equations
+    v == R.v - C.v;
+    x.der == v;
+    a == v.der
+    p == x;
+end
+
+end
